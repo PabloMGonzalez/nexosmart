@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+
+    <script>
+      //guardo la url en una variable
+      const urlId = new URLSearchParams(window.location.search);
+      //guardo la id sacada de la url en una variable
+      const id = urlId.get("id");
+      //creo un array para guardar las ids
+      const listId = [];
+      //comparo antes de guardar los ids en el array
+      if (id >= 2 && id % 2 == 0 && id <= 10) {
+        let recoveredData = localStorage.getItem("id");
+        if (recoveredData == null) {
+          //no tenemos nada guardado, por lo cual vamos a guardar el id
+          localStorage.setItem("id", JSON.stringify(id));
+        } else {
+          listId = JSON.parse(localStorage.getItem("session")) || [];
+          //push y metemos el id en el array
+          listId.push(id);
+          //volvemos el array a string y guardamos
+          localStorage.setItem("session", JSON.stringify(listId));
+        }
+      } else {
+        alert("ingrese un numero adecuado en la url");
+      }
+
+      //funcion para mostrar los datos
+      function mostrarDatos() {
+        for (i = 0; i < listId.length; i++) {
+          listId[i] = "Ingresé al array y tengo el ID: " + listId[i] + "<br>";
+        }
+        document.getElementById("id").innerHTML = listId;
+      }
+    </script>
+  </head>
+
+  <body>
+    <h1>NexoSmart Test</h1>
+
+    <p>Ingrese un nro correcto en la url '?id='</p>
+
+    <input
+      type="button"
+      value="Click para ver el array de IDs"
+      onclick="javascript:mostrarDatos()"
+    />
+
+    <div id="id" />
+  </body>
+</html>
